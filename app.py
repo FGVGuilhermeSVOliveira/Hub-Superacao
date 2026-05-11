@@ -219,8 +219,7 @@ col_logo, col_nav = st.columns([5, 6])
 with col_logo:
     st.markdown("""
     <div style="display:flex;align-items:center;gap:12px;padding:20px 0 8px;">
-      <img src="https://www.desenvolvimentosocial.sp.gov.br/wp-content/themes/seds/img/logo.png"
-           style="height:52px;" onerror="this.style.display='none'" />
+      <span style="font-size:40px;line-height:1;">🏆</span>
       <h1 style="font-family:Merriweather,serif;font-size:26px;color:#1f2937;margin:0;">SuperAção SP</h1>
     </div>
     """, unsafe_allow_html=True)
