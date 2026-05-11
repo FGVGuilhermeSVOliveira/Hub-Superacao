@@ -215,26 +215,20 @@ if "page" not in st.session_state:
     st.session_state.page = "suas"
 
 # ── NAV ──────────────────────────────────────────────────────────────────────
-col_logo, col_nav = st.columns([1.4, 1])
+col_logo, col_nav = st.columns([5, 6])
 with col_logo:
     st.markdown("""
-    <div style="display:flex;align-items:center;gap:14px;padding:20px 0 8px;">
-      <div style="width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,#8C8D3A,#a8a94c);
-                  display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;
-                  box-shadow:0 2px 8px rgba(140,141,58,.35);">🤝</div>
-      <div>
-        <h1 style="font-family:Merriweather,serif;font-size:22px;color:#1f2937;margin:0;line-height:1.2;">SuperAção SP</h1>
-        <p style="font-size:13px;color:#6b7280;margin:2px 0 0;">Plataforma Interativa Informativa</p>
-      </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:20px 0 8px;">
+      <img src="https://www.desenvolvimentosocial.sp.gov.br/wp-content/themes/seds/img/logo.png"
+           style="height:52px;" onerror="this.style.display='none'" />
+      <h1 style="font-family:Merriweather,serif;font-size:26px;color:#1f2937;margin:0;">SuperAção SP</h1>
     </div>
     """, unsafe_allow_html=True)
 
 with col_nav:
     st.markdown("<div style='padding-top:20px;'></div>", unsafe_allow_html=True)
-    n1, n2 = st.columns(2)
+    n1, n2 = st.columns([1, 2])
     with n1:
-        suas_style = "background:#8C8D3A;color:#fff;width:100%;"
-        servicos_inactive = "background:#f3f4f6;color:#374151;width:100%;"
         if st.button("🕸️ SUAS", key="btn_suas",
                      type="primary" if st.session_state.page == "suas" else "secondary",
                      use_container_width=True):
@@ -346,8 +340,8 @@ if st.session_state.page == "suas":
             <p>Porta de entrada da Assistência Social. Atendimento familiar e comunitário para prevenção de situações de risco.</p>
           </div>
         </div>
-        <div class="cta-marker cta-cras"></div>
         """, unsafe_allow_html=True)
+        st.markdown('<div class="cta-marker cta-cras"></div>', unsafe_allow_html=True)
         if st.button("Ver serviços do CRAS →", key="goto_cras", use_container_width=True):
             st.session_state.page = "servicos"
             st.session_state.scroll_to = "cras"
@@ -364,8 +358,8 @@ if st.session_state.page == "suas":
             <p>Atendimento especializado para famílias e indivíduos em situação de violação de direitos e violência.</p>
           </div>
         </div>
-        <div class="cta-marker cta-creas"></div>
         """, unsafe_allow_html=True)
+        st.markdown('<div class="cta-marker cta-creas"></div>', unsafe_allow_html=True)
         if st.button("Ver serviços do CREAS →", key="goto_creas", use_container_width=True):
             st.session_state.page = "servicos"
             st.session_state.scroll_to = "creas"
@@ -382,8 +376,8 @@ if st.session_state.page == "suas":
         oferecidos pelo CRAS e CREAS
       </p>
     </div>
-    <div class="cta-marker cta-all"></div>
     """, unsafe_allow_html=True)
+    st.markdown('<div class="cta-marker cta-all"></div>', unsafe_allow_html=True)
     if st.button("Ver Todos os Serviços →", key="cta_all", use_container_width=True):
         st.session_state.page = "servicos"
         st.rerun()
@@ -592,8 +586,8 @@ elif st.session_state.page == "servicos":
         no entendimento e articulação com a rede SUAS
       </p>
     </div>
-    <div class="cta-marker cta-back"></div>
     """, unsafe_allow_html=True)
+    st.markdown('<div class="cta-marker cta-back"></div>', unsafe_allow_html=True)
     if st.button("← Voltar ao SUAS", key="back_bottom", use_container_width=True):
         st.session_state.page = "suas"
         st.rerun()
