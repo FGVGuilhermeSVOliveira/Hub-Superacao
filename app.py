@@ -140,6 +140,73 @@ st.markdown("""
     border:none !important;
     transition: all .2s !important;
   }
+
+  /* Item 5: prevent the navbar button labels from wrapping to a second line */
+  .stButton > button p,
+  .stButton > button div { white-space: nowrap !important; }
+  .stButton > button { white-space: nowrap !important; }
+
+  /* ── ATTACHED CTA BUTTONS ────────────────────────────────────────────────
+     We can't literally insert a Streamlit button inside a markdown card,
+     so we use invisible "marker" divs together with CSS :has() selectors
+     to style the button that immediately follows the marker, making it
+     visually merge with the preceding card. */
+
+  /* Cards that visually continue into the CTA button below */
+  .hero-card.with-cta,
+  .card-orange-grad.with-cta,
+  .card-olive-grad.with-cta {
+    border-radius: 24px 24px 0 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 28px !important;
+  }
+
+  /* Hide the marker container but keep it in DOM for sibling selection */
+  .cta-marker { display:none; }
+  div[data-testid="stVerticalBlock"] > div[data-testid="element-container"]:has(.cta-marker) {
+    height: 0; margin: 0; padding: 0;
+  }
+
+  /* Pull the button up to sit flush against the card above */
+  div[data-testid="element-container"]:has(.cta-marker) + div[data-testid="element-container"] {
+    margin-top: 0 !important;
+    margin-bottom: 32px !important;
+  }
+  div[data-testid="element-container"]:has(.cta-marker) + div[data-testid="element-container"] .stButton > button {
+    border-radius: 0 0 24px 24px !important;
+    padding: 18px 24px !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    border: none !important;
+    width: 100% !important;
+    box-shadow: 0 6px 24px rgba(0,0,0,.10) !important;
+    transition: filter .2s, transform .2s !important;
+  }
+  div[data-testid="element-container"]:has(.cta-marker) + div[data-testid="element-container"] .stButton > button:hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+  }
+
+  /* CRAS attached button (blue gradient, white text) */
+  div[data-testid="element-container"]:has(.cta-marker.cta-cras) + div[data-testid="element-container"] .stButton > button {
+    background: linear-gradient(135deg,#0D5A94,#1a72b8) !important;
+    color: #fff !important;
+  }
+  /* CREAS attached button (red gradient, white text) */
+  div[data-testid="element-container"]:has(.cta-marker.cta-creas) + div[data-testid="element-container"] .stButton > button {
+    background: linear-gradient(135deg,#EE2C35,#f44d55) !important;
+    color: #fff !important;
+  }
+  /* "Ver todos os serviços" attached button (white bg over orange card) */
+  div[data-testid="element-container"]:has(.cta-marker.cta-all) + div[data-testid="element-container"] .stButton > button {
+    background: #fff !important;
+    color: #F79620 !important;
+  }
+  /* "Voltar ao SUAS" attached button (white bg over olive card) */
+  div[data-testid="element-container"]:has(.cta-marker.cta-back) + div[data-testid="element-container"] .stButton > button {
+    background: #fff !important;
+    color: #8C8D3A !important;
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -148,13 +215,17 @@ if "page" not in st.session_state:
     st.session_state.page = "suas"
 
 # ── NAV ──────────────────────────────────────────────────────────────────────
-col_logo, col_nav = st.columns([2, 1])
+col_logo, col_nav = st.columns([1.4, 1])
 with col_logo:
     st.markdown("""
-    <div style="display:flex;align-items:center;gap:12px;padding:20px 0 8px;">
-      <img src="https://www.desenvolvimentosocial.sp.gov.br/wp-content/themes/seds/img/logo.png"
-           style="height:52px;" onerror="this.style.display='none'" />
-      <h1 style="font-family:Merriweather,serif;font-size:26px;color:#1f2937;margin:0;">SuperAção SP</h1>
+    <div style="display:flex;align-items:center;gap:14px;padding:20px 0 8px;">
+      <div style="width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,#8C8D3A,#a8a94c);
+                  display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;
+                  box-shadow:0 2px 8px rgba(140,141,58,.35);">🤝</div>
+      <div>
+        <h1 style="font-family:Merriweather,serif;font-size:22px;color:#1f2937;margin:0;line-height:1.2;">SuperAção SP</h1>
+        <p style="font-size:13px;color:#6b7280;margin:2px 0 0;">Plataforma Interativa Informativa</p>
+      </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -266,7 +337,7 @@ if st.session_state.page == "suas":
     col_cras, col_creas = st.columns(2)
     with col_cras:
         st.markdown("""
-        <div class="hero-card hero-card-blue">
+        <div class="hero-card hero-card-blue with-cta">
           <div style="font-size:52px;">🏠</div>
           <h2>CRAS</h2>
           <p>Centro de Referência de Assistência Social</p>
@@ -275,6 +346,7 @@ if st.session_state.page == "suas":
             <p>Porta de entrada da Assistência Social. Atendimento familiar e comunitário para prevenção de situações de risco.</p>
           </div>
         </div>
+        <div class="cta-marker cta-cras"></div>
         """, unsafe_allow_html=True)
         if st.button("Ver serviços do CRAS →", key="goto_cras", use_container_width=True):
             st.session_state.page = "servicos"
@@ -283,7 +355,7 @@ if st.session_state.page == "suas":
 
     with col_creas:
         st.markdown("""
-        <div class="hero-card hero-card-red">
+        <div class="hero-card hero-card-red with-cta">
           <div style="font-size:52px;">❤️</div>
           <h2>CREAS</h2>
           <p>Centro de Referência Especializado de Assistência Social</p>
@@ -292,6 +364,7 @@ if st.session_state.page == "suas":
             <p>Atendimento especializado para famílias e indivíduos em situação de violação de direitos e violência.</p>
           </div>
         </div>
+        <div class="cta-marker cta-creas"></div>
         """, unsafe_allow_html=True)
         if st.button("Ver serviços do CREAS →", key="goto_creas", use_container_width=True):
             st.session_state.page = "servicos"
@@ -302,15 +375,16 @@ if st.session_state.page == "suas":
 
     # CTA
     st.markdown("""
-    <div class="card-orange-grad">
+    <div class="card-orange-grad with-cta">
       <h3 class="section-h3-white">Explore os Serviços Detalhados</h3>
       <p class="section-subtitle-white">
         Clique nos cards acima ou no menu de navegação para conhecer todos os serviços
         oferecidos pelo CRAS e CREAS
       </p>
     </div>
+    <div class="cta-marker cta-all"></div>
     """, unsafe_allow_html=True)
-    if st.button("Ver Todos os Serviços →", key="cta_all", use_container_width=False):
+    if st.button("Ver Todos os Serviços →", key="cta_all", use_container_width=True):
         st.session_state.page = "servicos"
         st.rerun()
 
@@ -511,14 +585,15 @@ elif st.session_state.page == "servicos":
 
     # Footer CTA
     st.markdown("""
-    <div class="card-olive-grad" style="text-align:center;margin-top:8px;">
+    <div class="card-olive-grad with-cta" style="text-align:center;margin-top:8px;">
       <h3 class="section-h3-white">Material de Apoio para Agentes Sociais</h3>
       <p class="section-subtitle-white">
         Esta ferramenta foi desenvolvida para auxiliar os agentes sociais do Programa SuperAção SP
         no entendimento e articulação com a rede SUAS
       </p>
     </div>
+    <div class="cta-marker cta-back"></div>
     """, unsafe_allow_html=True)
-    if st.button("← Voltar ao SUAS", key="back_bottom"):
+    if st.button("← Voltar ao SUAS", key="back_bottom", use_container_width=True):
         st.session_state.page = "suas"
         st.rerun()
