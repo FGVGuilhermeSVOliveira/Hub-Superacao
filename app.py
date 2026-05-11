@@ -3,7 +3,7 @@ import streamlit as st
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="SuperAção SP – Plataforma Interativa",
-    page_icon="🤝",
+    page_icon="🏆",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -229,7 +229,7 @@ with col_nav:
     st.markdown("<div style='padding-top:20px;'></div>", unsafe_allow_html=True)
     n1, n2 = st.columns([1, 2])
     with n1:
-        if st.button("🕸️ SUAS", key="btn_suas",
+        if st.button("🤝 SUAS", key="btn_suas",
                      type="primary" if st.session_state.page == "suas" else "secondary",
                      use_container_width=True):
             st.session_state.page = "suas"
