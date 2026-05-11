@@ -93,7 +93,7 @@ st.markdown("""
   .svc-header-red  { background:linear-gradient(90deg,#EE2C35,#f44d55); }
   .svc-header-red2 { background:linear-gradient(90deg,#d92830,#EE2C35); }
   .svc-body { background:#fff; border-radius:0 0 16px 16px; padding:32px; margin-bottom:28px; box-shadow:0 6px 24px rgba(0,0,0,.07); }
-  .svc-title { font-family:'Merriweather',serif; font-size:22px; font-weight:700; color:#fff; margin:0; }
+  .svc-title { font-family:'Merriweather',serif; font-size:22px; font-weight:700; color:#fff !important; margin:0; }
   .svc-icon { font-size:36px; flex-shrink:0; }
   .svc-label { font-size:15px; font-weight:700; color:#1f2937; margin:0 0 6px; }
   .svc-value { font-size:17px; color:#374151; margin:0 0 20px; }
